@@ -1,0 +1,160 @@
+.raw-viewer {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tab-header {
+  display: flex;
+  border-bottom: 2px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 1em;
+  color: #6c757d;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  color: #007bff;
+}
+
+.tab-button.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  font-weight: bold;
+}
+
+.tab-content {
+  min-height: 400px;
+}
+
+.parsed-content h3, .raw-content h3 {
+  margin: 0 0 20px 0;
+  color: #495057;
+}
+
+.object-tree {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.object-item {
+  margin-bottom: 15px;
+  border-left: 2px solid #007bff;
+  padding-left: 10px;
+}
+
+.object-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.object-type {
+  background: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.object-name {
+  background: #28a745;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: monospace;
+}
+
+.object-properties {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.property-item {
+  display: flex;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.property-key {
+  font-weight: bold;
+  color: #dc3545;
+  min-width: 120px;
+  margin-right: 10px;
+}
+
+.property-value {
+  color: #495057;
+  font-family: monospace;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.object-children {
+  margin-top: 10px;
+}
+
+.raw-content {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.raw-text {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  line-height: 1.4;
+  max-height: 600px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .raw-viewer {
+    padding: 10px;
+  }
+  
+  .tab-button {
+    padding: 10px 16px;
+    font-size: 0.9em;
+  }
+  
+  .object-item {
+    margin-left: 0 !important;
+  }
+  
+  .property-item {
+    flex-direction: column;
+  }
+  
+  .property-key {
+    min-width: auto;
+    margin-right: 0;
+    margin-bottom: 2px;
+  }
+}
