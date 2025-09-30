@@ -1,6 +1,6 @@
 import { RoseObject, RoseClass, RoseOperation } from '../types/RoseTypes';
 
-export class RoseParserV2 {
+export class RoseParserV3 {
   private tokens: string[] = [];
   private position: number = 0;
 
@@ -33,7 +33,6 @@ export class RoseParserV2 {
     const tokens: string[] = [];
     let current = '';
     let inString = false;
-    // let parenDepth = 0;
     
     for (let i = 0; i < cleaned.length; i++) {
       const char = cleaned[i];
@@ -49,8 +48,6 @@ export class RoseParserV2 {
           current = '';
         }
         tokens.push(char);
-        // if (char === '(') parenDepth++;
-        // else parenDepth--;
       } else if (/\s/.test(char)) {
         if (current.trim()) {
           tokens.push(current.trim());
@@ -75,8 +72,7 @@ export class RoseParserV2 {
     this.position++; // skip '('
 
     if (this.tokens[this.position] !== 'object') {
-      const context = this.tokens.slice(Math.max(0, this.position - 3), this.position + 3).join(' ');
-      throw new Error(`Expected 'object' at position ${this.position}, found '${this.tokens[this.position]}'. Context: ${context}`);
+      throw new Error(`Expected 'object' at position ${this.position}, found '${this.tokens[this.position]}'`);
     }
     this.position++; // skip 'object'
 
@@ -93,47 +89,29 @@ export class RoseParserV2 {
     const children: RoseObject[] = [];
 
     while (this.position < this.tokens.length && this.tokens[this.position] !== ')') {
-      const token = this.tokens[this.position];
+      const key = this.tokens[this.position];
+      this.position++;
       
-      if (token === '(') {
-        // Check if this is a list
-        if (this.tokens[this.position + 1] === 'list') {
+      if (this.position < this.tokens.length) {
+        if (this.tokens[this.position] === '(' && this.tokens[this.position + 1] === 'list') {
+          // This is a list property
           this.position++; // skip '('
           this.position++; // skip 'list'
-          const listType = this.tokens[this.position++];
-          const listItems = this.parseList();
-          properties[listType] = listItems;
-        } else if (this.tokens[this.position + 1] === 'object') {
-          // Nested object
-          children.push(this.parseObject());
-        } else {
-          // This is likely a parenthesized value that got misplaced
-          // Skip it for now or handle as needed
-          this.position++;
-          while (this.position < this.tokens.length && this.tokens[this.position] !== ')') {
-            this.position++;
-          }
-          if (this.tokens[this.position] === ')') {
-            this.position++;
-          }
-        }
-      } else {
-        // Check if this is a property followed by a list
-        const key = token;
-        this.position++;
-        
-        if (this.position < this.tokens.length && 
-            this.tokens[this.position] === '(' && 
-            this.tokens[this.position + 1] === 'list') {
-          // This is a property with a list value
-          this.position++; // skip '('
-          this.position++; // skip 'list'
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const listType = this.tokens[this.position++];
           const listItems = this.parseList();
           properties[key] = listItems;
+        } else if (this.tokens[this.position] === '(' && this.tokens[this.position + 1] === 'object') {
+          // This is a nested object - add to children but also set as property
+          const nestedObject = this.parseObject();
+          children.push(nestedObject);
+          if (!properties[key]) {
+            properties[key] = [];
+          }
+          if (Array.isArray(properties[key])) {
+            properties[key].push(nestedObject);
+          }
         } else {
-          // Regular property - parseValue will handle the current position
+          // Regular property value
           const value = this.parseValue();
           properties[key] = value;
         }
@@ -151,17 +129,9 @@ export class RoseParserV2 {
     const items: any[] = [];
     
     while (this.position < this.tokens.length && this.tokens[this.position] !== ')') {
-      if (this.tokens[this.position] === '(') {
-        // This could be an object or another nested structure
-        if (this.tokens[this.position + 1] === 'object') {
-          items.push(this.parseObject());
-        } else {
-          // This might be a parenthesized value or nested structure
-          const nestedValue = this.parseValue();
-          items.push(nestedValue);
-        }
+      if (this.tokens[this.position] === '(' && this.tokens[this.position + 1] === 'object') {
+        items.push(this.parseObject());
       } else {
-        // This is a simple value
         items.push(this.parseValue());
       }
     }
@@ -234,7 +204,7 @@ export class RoseParserV2 {
           });
         }
 
-        // Extract operations/methods
+        // Extract operations/methods - improved parsing
         if (obj.properties.operations && Array.isArray(obj.properties.operations)) {
           obj.properties.operations.forEach((op: any) => {
             if (op && typeof op === 'object' && op.type === 'Operation') {
@@ -262,7 +232,7 @@ export class RoseParserV2 {
                 });
               }
 
-              // Extract operation attributes (for documentation, etc.)
+              // Extract operation attributes
               if (op.properties?.attributes && Array.isArray(op.properties.attributes)) {
                 op.properties.attributes.forEach((attr: any) => {
                   if (attr && typeof attr === 'object' && attr.type === 'Attribute') {

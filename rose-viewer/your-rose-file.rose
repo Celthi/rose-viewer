@@ -1,0 +1,729 @@
+(object Petal
+    version    	42
+    _written   	"Rose 6.0.8321.10"
+    charSet    	0)
+
+(object Class_Category "IDSSObjectServer"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"345509A9008B"
+    documentation 	"This category contains classes for populating data from object server to DFC SQL Engine"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "DFCUserObjsIDSS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"cg"
+		    name       	"GenerateDefaultConstructor"
+		    value      	("GenerateSet" 206))
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"BodyFile"
+		    value      	"$DFC_PATH\\SourceCode\\IDSSObjectServer\\DFCUserObjsIDSS.cpp")
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"CodeFile"
+		    value      	"$DFC_PATH\\SourceCode\\IDSSObjectServer\\DFCUserObjsIDSS.h"))
+	    quid       	"345513170000"
+	    documentation 	
+|This class inherits from DFCObjsIDSS. It knows how to load Application Objects from COM Object Server. 
+|
+|It calls IDSS interface, instead of using CDSS classes' implementation.
+|
+|It uses three index on AggMetrics, DimMetrics, and Filters. This prevents re-loading of app objects which are already loaded, and also detects circular dependency.
+	    
+	    fields     	(list has_relationship_list
+		(object Has_Relationship
+		    quid       	"34551B3E02F0"
+		    label      	"mProjectName"
+		    supplier   	"Logical View::DataStructure::DFCString"
+		    quidu      	"3311AB4600F5"
+		    exportControl 	"Protected"
+		    Containment 	"By Value")
+		(object Has_Relationship
+		    quid       	"34551B660199"
+		    label      	"mDriver"
+		    supplier   	"VLDBDriver"
+		    quidu      	"332B72F401AC"
+		    exportControl 	"Protected"
+		    Containment 	"By Reference")
+		(object Has_Relationship
+		    quid       	"34551B8D00D7"
+		    label      	"mOwner"
+		    supplier   	"Logical View::Security::DFCOwner"
+		    quidu      	"334171EF0153"
+		    exportControl 	"Protected"
+		    Containment 	"By Reference")
+		(object Has_Relationship
+		    quid       	"346889140186"
+		    label      	"mAggMetricLU"
+		    supplier   	"Logical View::IDSSObjectServer::AggMetricLoadLU"
+		    quidu      	"3468888D02B8"
+		    exportControl 	"Private"
+		    Containment 	"By Value")
+		(object Has_Relationship
+		    quid       	"34688A870374"
+		    label      	"mDimMetricLU"
+		    supplier   	"Logical View::IDSSObjectServer::DimMetricLoadLU"
+		    quidu      	"34688A2F004C"
+		    exportControl 	"Private"
+		    Containment 	"By Value")
+		(object Has_Relationship
+		    quid       	"34688B0D0240"
+		    label      	"mFilterLU"
+		    supplier   	"Logical View::IDSSObjectServer::FilterLoadLU"
+		    quidu      	"34688AAF0213"
+		    exportControl 	"Private"
+		    Containment 	"By Value"))
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3460ED9102C3"
+		    supplier   	"Logical View::IDSSObjectServer::DFCObjsIDSS"
+		    quidu      	"3460ED87021E"))
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"345A1CA8002F"
+		    supplier   	"Logical View::TemplateUnit::DFCReport"
+		    quidu      	"331C55E301D3")
+		(object Uses_Relationship
+		    quid       	"345A3B2B02D0"
+		    supplier   	"Logical View::AggMetric::DFCAggMetricBranch"
+		    quidu      	"330B50AA0072")
+		(object Uses_Relationship
+		    quid       	"345A432A02E7"
+		    supplier   	"Logical View::Expression::DFCExprAttrFormSet"
+		    quidu      	"33383DD9018D")
+		(object Uses_Relationship
+		    quid       	"345A4777002E"
+		    supplier   	"Logical View::Expression::DFCExprFact"
+		    quidu      	"333851AE0346")
+		(object Uses_Relationship
+		    quid       	"345A504500F7"
+		    supplier   	"Logical View::AttrFormSet::DFCAttrFormSet"
+		    quidu      	"3337D06E035C")
+		(object Uses_Relationship
+		    quid       	"345A507600F7"
+		    supplier   	"Logical View::Expression::DFCExprAttrFormSet"
+		    quidu      	"33383DD9018D")
+		(object Uses_Relationship
+		    quid       	"345A52C50057"
+		    supplier   	"Logical View::AggMetric::DFCAggMetricLeaf"
+		    quidu      	"3308E08001BB")
+		(object Uses_Relationship
+		    quid       	"345A52E50202"
+		    supplier   	"Logical View::Expression::DFCExprFunc"
+		    quidu      	"330B58BF0320")
+		(object Uses_Relationship
+		    quid       	"345A53000002"
+		    supplier   	"Logical View::Project::DFCSchema"
+		    quidu      	"397874750008")
+		(object Uses_Relationship
+		    quid       	"345A53BF03C8"
+		    supplier   	"Logical View::Expression::DFCExprString"
+		    quidu      	"33384AE00215")
+		(object Uses_Relationship
+		    quid       	"345A5A3301E3"
+		    supplier   	"Logical View::DimMetric::DFCDimMetricBranch"
+		    quidu      	"330B505D0176")
+		(object Uses_Relationship
+		    quid       	"345A66D100E3"
+		    supplier   	"Logical View::ReportDisp::DFCReportDisp"
+		    quidu      	"331B871D029D")
+		(object Uses_Relationship
+		    quid       	"345DF30701A7"
+		    supplier   	"Logical View::TemplateUnit::DFCTemplateUnitDim"
+		    quidu      	"3308F1BB037D")
+		(object Uses_Relationship
+		    quid       	"345DF5EB02E1"
+		    supplier   	"Logical View::TemplateUnit::DFCTemplateUnitMetrics"
+		    quidu      	"3308F0E802C5")
+		(object Uses_Relationship
+		    quid       	"345DFD4C0323"
+		    supplier   	"Logical View::Filter::DFCFilterUnitBranch"
+		    quidu      	"330210750274")
+		(object Uses_Relationship
+		    quid       	"345E0EA700F2"
+		    supplier   	"Logical View::Expression::DFCAttrElem"
+		    quidu      	"3308838D007A")
+		(object Uses_Relationship
+		    quid       	"345E0FB60192"
+		    supplier   	"Logical View::Attribute::DFCAttrDefUnit"
+		    quidu      	"32C3EF300301")
+		(object Uses_Relationship
+		    quid       	"345E21DF0038"
+		    supplier   	"Logical View::FilterPred::DFCFilterEntity"
+		    quidu      	"330210840171")
+		(object Uses_Relationship
+		    quid       	"345E25E80029"
+		    supplier   	"Logical View::Filter::DFCFilterEmb"
+		    quidu      	"3308FC640172")
+		(object Uses_Relationship
+		    quid       	"3470A4280209"
+		    supplier   	"Logical View::Report::DFCReportBase"
+		    quidu      	"334433020054")
+		(object Uses_Relationship
+		    quid       	"3470A49F000B"
+		    supplier   	"Logical View::Report::DFCReportExtn"
+		    quidu      	"3344333A0195")
+		(object Uses_Relationship
+		    quid       	"349562F4005D"
+		    documentation 	"Need to overload new!"
+		    supplier   	"Logical View::DataStructure::DFCNew"
+		    quidu      	"345F5EF90234")
+		(object Uses_Relationship
+		    quid       	"34E31CB303A7"
+		    supplier   	"Logical View::MsiComUtil::DSSBuffer"
+		    quidu      	"345F5EA300B4")
+		(object Uses_Relationship
+		    quid       	"34E31CDE005F"
+		    supplier   	"Logical View::DataStructure::DFCAllocator"
+		    quidu      	"345F81BE01E3")
+		(object Uses_Relationship
+		    quid       	"34EB0E49019B"
+		    supplier   	"Logical View::FilterPred::DFCFilterMetric"
+		    quidu      	"3302126D0391")
+		(object Uses_Relationship
+		    quid       	"34EB0F87033D"
+		    supplier   	"Logical View::DimMetric::DFCDimMetricExt"
+		    quidu      	"34A8105B018E")
+		(object Uses_Relationship
+		    quid       	"34EB0FBB017F"
+		    supplier   	"Logical View::Expression::DFCExprDimMetric"
+		    quidu      	"346CD388039D"))
+	    operations 	(list Operations
+		(object Operation "DFCUserObjsIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A50D4014D"
+		    documentation 	
+|Constructor, takes 
+|(1) DFCSchema to look for the attr, fact, etc. which are loaded by DFCSchemaObjsIDSS.
+|(2) IDSSSource to load data from.
+		    
+		    parameters 	(list Parameters
+			(object Parameter "iBuffer"
+			    type       	"MBase::Buffer *")
+			(object Parameter "iSchema"
+			    type       	"DFCSchema &")
+			(object Parameter "ipIDSSSource"
+			    type       	"IDSSSource *")
+			(object Parameter "iSmIndex"
+			    type       	"SchemaLoadIndex &"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320186)
+		(object Operation "LoadTemplate"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345517EE026F"
+		    parameters 	(list Parameters
+			(object Parameter "iGuid"
+			    type       	"BSTR"))
+		    result     	"DFCReport *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320176)
+		(object Operation "LoadDimMetric"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345517F6018A"
+		    parameters 	(list Parameters
+			(object Parameter "iGuid"
+			    type       	"BSTR"))
+		    result     	"DFCDimMetric *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320177)
+		(object Operation "LoadFilter"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345517FF0147"
+		    parameters 	(list Parameters
+			(object Parameter "iGuid"
+			    type       	"BSTR"))
+		    result     	"DFCFilter *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320178)
+		(object Operation "LoadAggMetric"
+		    attributes 	(list Attribute_Set)
+		    quid       	"34551808008B"
+		    parameters 	(list Parameters
+			(object Parameter "iGuid"
+			    type       	"BSTR"))
+		    result     	"DFCAggMetric *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320179)
+		(object Operation "LoadTemplate"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A1A71011A"
+		    documentation 	"Load a template from core objects"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSTemplate"
+			    type       	"IDSSTemplate *"))
+		    result     	"DFCReport *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320180)
+		(object Operation "LoadDimMetric"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A1ABD02A0"
+		    documentation 	"Load a DimMetric from core objects"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSMetric"
+			    type       	"IDSSMetric *"))
+		    result     	"DFCDimMetric *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320181)
+		(object Operation "LoadFilter"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A1B300133"
+		    documentation 	"Load a filter from core objects"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSFilter"
+			    type       	"IDSSFilter *"))
+		    result     	"DFCFilter *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320182)
+		(object Operation "LoadAggMetric"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A1B57028E"
+		    documentation 	"Load a aggregation metric from core objects"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSAggMetric"
+			    type       	"IDSSAggMetric *"))
+		    result     	"DFCAggMetric *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320183)
+		(object Operation "LoadReport"
+		    attributes 	(list Attribute_Set)
+		    quid       	"347096E301DC"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSRepotDefn"
+			    type       	"IDSSReportDefinition *"))
+		    result     	"DFCReportBase *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	879781646)
+		(object Operation "GetTemplateAttr"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345F8DBA01BF"
+		    documentation 	"generate DFCTemplateUnitAttr from IDSSTemplateAttribute"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSTemplateAttr"
+			    type       	"IDSSTemplateAttribute *"))
+		    result     	"DFCTemplateUnitAttr *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878677545)
+		(object Operation "AggMetricFromIDSSExpr"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A38B5039C"
+		    documentation 	"generate a DFCAggMetric from Expression Root (an IDSSObjectInfo pointer)"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSExprRootInfo"
+			    type       	"IDSSObjectInfo *"))
+		    result     	"DFCAggMetric *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878320184)
+		(object Operation "ReadDimty"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A604803E0"
+		    documentation 	"generate DFCDimty from IDSSDimty"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSDimty"
+			    type       	"IDSSDimty *"))
+		    result     	"DFCDimty *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878320187)
+		(object Operation "AttrFormSetFromIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345DF9590261"
+		    parameters 	(list Parameters
+			(object Parameter "ipDFCAttr"
+			    type       	"DFCAttr *")
+			(object Parameter "ipIDSSForms"
+			    type       	"IDSSAttributeForms *"))
+		    result     	"DFCAttrFormSet *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878570732)
+		(object Operation "ConstFromIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345DFA0002F8"
+		    parameters 	(list Parameters
+			(object Parameter "iCConstInfo"
+			    type       	"ICDSSObjectInfo *"))
+		    result     	"DFCExprString *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878570733)
+		(object Operation "FilterUnitFromIDSSExpr"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345DF7A901FC"
+		    documentation 	"generate a DFCFilterUnit from Expression Root (an IDSSObjectInfo pointer)"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSExprRootInfo"
+			    type       	"IDSSObjectInfo *"))
+		    result     	"DFCFilterUnit *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878570731)
+		(object Operation "FilterEntityFromIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345FABF601F1"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSFuncFolder"
+			    type       	"IDSSFolder *")
+			(object Parameter "ipDFCFunc"
+			    type       	"DFCFunc *"))
+		    result     	"DFCFilterEntity *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878677546)
+		(object Operation "ExprFromIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"346B315A014D"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSExprInfo"
+			    type       	"IDSSObjectInfo *"))
+		    result     	"DFCExpr *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	879434839))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "mpIDSSSource"
+		    quid       	"3469D0FE02FD"
+		    documentation 	"The IDSSScource "
+		    type       	"IDSSSource *"))
+	    statediagram 	(object State_Diagram ""
+		quid       	"345DFB120306"
+		title      	""
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list))
+	    language   	"C++")
+	(object Class "DFCSchemaObjsIDSS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"cg"
+		    name       	"GenerateDefaultConstructor"
+		    value      	("GenerateSet" 206))
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"BodyFile"
+		    value      	"$DATA\\SourceCode\\IDSSObjectServer\\DFCSchemaObjsIDSS.cpp")
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"CodeFile"
+		    value      	"$DATA\\SourceCode\\IDSSObjectServer\\DFCSchemaObjsIDSS.h"))
+	    quid       	"34567A4C017D"
+	    documentation 	
+|This class inherits from DFCObjsIDSS. It knows how to load Schema Objects from COM Object Server. 
+|
+|It calls IDSS and ICDSS interface, instead of using CDSS classes' implementation.
+|
+|
+|
+	    
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3469CB690352"
+		    supplier   	"Logical View::IDSSObjectServer::DFCObjsIDSS"
+		    quidu      	"3460ED87021E"))
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"34579BDB02CE"
+		    supplier   	"Logical View::Project::DFCSchema"
+		    quidu      	"397874750008")
+		(object Uses_Relationship
+		    quid       	"3457A2640251"
+		    supplier   	"Logical View::SchemaExpr::DFCExprTrueCol"
+		    quidu      	"3300CBCB02CC")
+		(object Uses_Relationship
+		    quid       	"3457AAD9005F"
+		    supplier   	"Logical View::Function::DFCFuncSimple"
+		    quidu      	"330B3E51021C")
+		(object Uses_Relationship
+		    quid       	"3457AC8301CA"
+		    supplier   	"Logical View::Dimension::DFCDimSystem"
+		    quidu      	"330B0FA80144")
+		(object Uses_Relationship
+		    quid       	"3457B2E3019F"
+		    supplier   	"Logical View::Attribute::DFCAttrDef"
+		    quidu      	"3300C2E30179")
+		(object Uses_Relationship
+		    quid       	"3457B48A0388"
+		    supplier   	"Logical View::Fact::DFCFactInfo"
+		    quidu      	"32FA10E4004E")
+		(object Uses_Relationship
+		    quid       	"3457BDDF0315"
+		    supplier   	"Logical View::SchemaExpr::DFCSchemaExprFunc"
+		    quidu      	"3370EFD9005D")
+		(object Uses_Relationship
+		    quid       	"3457C201026C"
+		    supplier   	"Logical View::SchemaExpr::DFCSchemaExprString"
+		    quidu      	"34311A9B02DE")
+		(object Uses_Relationship
+		    quid       	"3460F8E601AC"
+		    supplier   	"Logical View::TemplateUnit::DFCTemplateUnitAttr"
+		    quidu      	"339302460004")
+		(object Uses_Relationship
+		    quid       	"34DB4D9B01E7"
+		    supplier   	"Logical View::AttrFormSet::DFCTemplateUnitDisp"
+		    quidu      	"3308F00E0195")
+		(object Uses_Relationship
+		    quid       	"34DB4E6B016E"
+		    supplier   	"Logical View::SEH::DFCSchemaException"
+		    quidu      	"344BA70F023B")
+		(object Uses_Relationship
+		    quid       	"34DB4E9902E7"
+		    supplier   	"Logical View::SEH::DFCPopuException"
+		    quidu      	"344BA7A70009")
+		(object Uses_Relationship
+		    quid       	"34E31C8203B0"
+		    supplier   	"Logical View::DataStructure::DFCNew"
+		    quidu      	"345F5EF90234")
+		(object Uses_Relationship
+		    quid       	"34E31C9802E0"
+		    supplier   	"Logical View::MsiComUtil::DSSBuffer"
+		    quidu      	"345F5EA300B4")
+		(object Uses_Relationship
+		    quid       	"34E31CE1026C"
+		    supplier   	"Logical View::DataStructure::DFCAllocator"
+		    quidu      	"345F81BE01E3"))
+	    operations 	(list Operations
+		(object Operation "DFCSchemaObjsIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"34567F8702B9"
+		    documentation 	
+|Construct a DFCSchemaObjsIDSS object.
+|Retrive IDSSSSchema interface pointer into mpIDSSSchema
+|Retrive ICDSSProject interface pointer into mpCDSSProject
+|Set property values into the parameter of incoming VLDBProfile
+|
+		    
+		    parameters 	(list Parameters
+			(object Parameter "iBuffer"
+			    type       	"MBase::Buffer *")
+			(object Parameter "iSchema"
+			    type       	"DFCSchema &")
+			(object Parameter "ipICDSSSchema"
+			    type       	"ICDSSSchema *")
+			(object Parameter "iSmIndex"
+			    type       	"SchemaLoadIndex &")
+			(object Parameter "iProfile"
+			    type       	"VLDBProfile *"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878084338)
+		(object Operation "Populate"
+		    attributes 	(list Attribute_Set)
+		    quid       	"34567F5502DF"
+		    documentation 	
+|Call this function to populate all schema object
+|
+|A dispatch function: call loading functions for different objects
+		    
+		    parameters 	(list Parameters
+			(object Parameter "isEngineLite"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878084339)
+		(object Operation "PopulateTableSource"
+		    attributes 	(list Attribute_Set)
+		    quid       	"3712627C00F3"
+		    documentation 	
+|Get the DSSSource of object server from schema
+|Search all the table source objects in the DSSSource
+|Put those table sources under a DSSFolder
+|Generate DFCTableSource objects from tables ousrces in that folder.
+|Insert the DFCTableSource into the mSchema and mSmIndex.
+|
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	923951779)
+		(object Operation "PopulateDBMS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"371262920087"
+		    documentation 	
+|Get all the DBMS objects from mSchema, and put them under a DSSFolder
+|Generate DFCDatabase objects from DBMS objects in that folder.
+|Insert the DFCDatabase into the mSchema and mSmIndex.
+|Get the properties of the DBMS objects and put into VLDBProfileData in DFCDatabase
+|
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	923951780)
+		(object Operation "PopulateDBRole"
+		    attributes 	(list Attribute_Set)
+		    quid       	"371CCF8600CE"
+		    documentation 	
+|Get all the DBRole objects from mSchema, and put them under a DSSFolder
+|Generate DFCDBRole objects from DBRole objects in that folder.
+|load the object before using its property
+|Set database type, database version, database name, and TableSpaceName
+|Set ID and name of the object
+|Insert the DFCDBRole into the mSchema and mSmIndex.
+|	
+|Get DSSTableSource, and get corresponding DFCTableSource
+|Set DFCTableSource in DFCDBRole
+|Get the properties of the DBRole objects and put into VLDBProfileData in DFCDBRole
+|
+|Setting primary DBRole for all DBRoles in this folder
+|
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	924635259)
+		(object Operation "PopulateRole"
+		    attributes 	(list Attribute_Set)
+		    quid       	"36095DDC02EB"
+		    documentation 	
+|get the collection of DSSRole from mpIDSSSchema directly
+|for each DSSRole:
+|	create DFCRole
+|	Set the name and ID of Role
+|	Set the RoleType property in DFCRole
+|	Set the Role_ERType property
+|	insert the DFCRole into mSchema and mSmIndex
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	906583284)
+		(object Operation "PopulateFact"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345680010369"
+		    documentation 	
+|Get the collection of DSSFact
+|for each DSSFact
+|                    Create DFCFact
+|	Set name and ID of DFCFact
+|	insert the DFCFact into mSchema, get the Index in mSchema
+|	Set the Fact Index
+|	insert Fact and its GUID into mSmIndex
+|	Get/Create the corresponding DFDCol for the DFCFact
+|	Link the DFCCol with the DFCFact.
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878084340)
+		(object Operation "PopulateFunc"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345680120327"
+		    documentation 	
+|Get a collection of IDSSFunctions from Schema
+|For each DSSFunction
+|        get DSS_id, Name of the object
+|	 get SQLPattern, AnalyticalFunctionType and FunctionType
+|	 get the SQLType and the SQLsubType
+|	 
+|	 create DFCFunc object with all the above information
+|	 
+|	 Generate mFuncMembers in the DFCSchema Object
+|	 Set SQLPattern
+|	 Set the SortDependednt flag
+|
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878084341)
+		(object Operation "PopulateTable"
+		    attributes 	(list Attribute_Set)
+		    quid       	"3457A12600A5"
+		    documentation 	
+|get collection of DSSTables
+|for each DSSTable
+|	Get logic table name and GUID
+|	Get Table size
+|	create DFCTable and insert into mSchema
+|	Set the Index insdie mSchema into the DFCTable
+|	insert DFCTable and its GUID into mSmIndex
+|
+|	Get DSSDbTable (Physical Table of the DSSTable)
+|	Find DFCTableSource corresponding to DSSTableSource inside the DSSDbTable
+|	Set TableSource of DFCTable
+|
+|For each DSSTable
+|	If it is Pirmary Table, set RoleTableMap in its DFCTable
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878156781)
+		(object Operation "PopulateDim"
+		    attributes 	(list Attribute_Set)
+		    quid       	"34568023030E"
+		    documentation 	
+|Get all DSSDimension object in the mSchema
+|For each DSSDimension
+|	Get name and GUID
+|	create new Dimension, insert it into Dimension Index in DFCSchema 
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878084342)
+		(object Operation "PopulateFactGroup"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345680320369"
+		    documentation 	
+|Get all FactGroup in the DSSSchema
+|For each FactGroup
+|	Get name and GUID of FactGroup
+|	Create new DFCFactGroup and insert into mSchema and mSmIndex
+|	For each FactInfo inside the FactGroup
+|		Get the DSSFact, then corresponding DFCFact 
+|		Generate Simple FactInfo based on DFCFact
+|		Set DFCFactInfo in the DFCFactGroup
+|
+		    
+		    result     	"HRESULT"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878084343)
+		(object Operation "PopulateAttribute"
+		    attributes 	(list Attribute_Set)
+		    quid       	"3456805903C0"
+		    parameters 	(list Parameters
+			(object Parameter "isEngineLite"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	878084344))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "mCSchema"
+		    quid       	"34579F4803DD"
+		    type       	"ICDSSSchema *")
+		(object ClassAttribute "mFactInfo_Index"
+		    quid       	"3481919D030A"
+		    type       	"vector<DFCFactInfo *>")
+		(object ClassAttribute "mpDBRole"
+		    quid       	"35D8D1630036"
+		    type       	"DFCDBRole *")
+		(object ClassAttribute "mMDPartTables"
+		    quid       	"366EF6CA00D3"
+		    type       	"vector<ICDSSTable*, MBase::Allocator<ICDSSTable* > > *"
+		    initv      	"0")
+		(object ClassAttribute "mContinue"
+		    quid       	"3872747200EF"
+		    type       	"bool"))
+	    language   	"C++")))

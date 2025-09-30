@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FileUploader from './components/FileUploader';
 import ClassViewer from './components/ClassViewer';
 import RawViewer from './components/RawViewer';
-import { RoseParserV2 } from './utils/RoseParserV2';
+import { RoseParserV3 } from './utils/RoseParserV3';
 import { RoseObject, RoseClass } from './types/RoseTypes';
 import './App.css';
 
@@ -20,12 +20,12 @@ function App() {
       setRawContent(content);
       setFilename(name);
       
-      const parser = new RoseParserV2();
+      const parser = new RoseParserV3();
       const parsed = parser.parse(content);
       console.log('Parsed object:', parsed);
       setRoseObject(parsed);
       
-      const extractedClasses = RoseParserV2.extractClasses(parsed);
+      const extractedClasses = RoseParserV3.extractClasses(parsed);
       console.log('Extracted classes:', extractedClasses);
       setClasses(extractedClasses);
       
@@ -389,6 +389,131 @@ function App() {
     handleFileLoad(sampleContent, 'sample.rose');
   };
 
+  const loadComplexSample = () => {
+    const complexSample = `(object Petal
+    version    	42
+    _written   	"Rose 6.0.8321.10"
+    charSet    	0)
+
+(object Class_Category "IDSSObjectServer"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"345509A9008B"
+    documentation 	"This category contains classes for populating data from object server to DFC SQL Engine"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "DFCUserObjsIDSS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"cg"
+		    name       	"GenerateDefaultConstructor"
+		    value      	("GenerateSet" 206))
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"BodyFile"
+		    value      	"$DFC_PATH\\SourceCode\\IDSSObjectServer\\DFCUserObjsIDSS.cpp")
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"CodeFile"
+		    value      	"$DFC_PATH\\SourceCode\\IDSSObjectServer\\DFCUserObjsIDSS.h"))
+	    quid       	"345513170000"
+	    documentation 	"This class inherits from DFCObjsIDSS. It knows how to load Application Objects from COM Object Server. It calls IDSS interface, instead of using CDSS classes' implementation. It uses three index on AggMetrics, DimMetrics, and Filters. This prevents re-loading of app objects which are already loaded, and also detects circular dependency."
+	    operations 	(list Operations
+		(object Operation "DFCUserObjsIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A50D4014D"
+		    documentation 	"Constructor, takes (1) DFCSchema to look for the attr, fact, etc. which are loaded by DFCSchemaObjsIDSS. (2) IDSSSource to load data from."
+		    parameters 	(list Parameters
+			(object Parameter "iBuffer"
+			    type       	"MBase::Buffer *")
+			(object Parameter "iSchema"
+			    type       	"DFCSchema &")
+			(object Parameter "ipIDSSSource"
+			    type       	"IDSSSource *")
+			(object Parameter "iSmIndex"
+			    type       	"SchemaLoadIndex &"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320186)
+		(object Operation "LoadTemplate"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345517EE026F"
+		    parameters 	(list Parameters
+			(object Parameter "iGuid"
+			    type       	"BSTR"))
+		    result     	"DFCReport *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320176)
+		(object Operation "LoadAggMetric"
+		    attributes 	(list Attribute_Set)
+		    quid       	"345A1B57028E"
+		    documentation 	"Load a aggregation metric from core objects"
+		    parameters 	(list Parameters
+			(object Parameter "ipIDSSAggMetric"
+			    type       	"IDSSAggMetric *"))
+		    result     	"DFCAggMetric *"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878320183))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "mpIDSSSource"
+		    quid       	"3469D0FE02FD"
+		    documentation 	"The IDSSScource "
+		    type       	"IDSSSource *"))
+	    language   	"C++")
+	(object Class "DFCSchemaObjsIDSS"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"cg"
+		    name       	"GenerateDefaultConstructor"
+		    value      	("GenerateSet" 206))
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"BodyFile"
+		    value      	"$DATA\\SourceCode\\IDSSObjectServer\\DFCSchemaObjsIDSS.cpp")
+		(object Attribute
+		    tool       	"Traversal"
+		    name       	"CodeFile"
+		    value      	"$DATA\\SourceCode\\IDSSObjectServer\\DFCSchemaObjsIDSS.h"))
+	    quid       	"34567A4C017D"
+	    documentation 	"This class inherits from DFCObjsIDSS. It knows how to load Schema Objects from COM Object Server. It calls IDSS and ICDSS interface, instead of using CDSS classes' implementation."
+	    operations 	(list Operations
+		(object Operation "DFCSchemaObjsIDSS"
+		    attributes 	(list Attribute_Set)
+		    quid       	"34567F8702B9"
+		    documentation 	"Construct a DFCSchemaObjsIDSS object. Retrive IDSSSSchema interface pointer into mpIDSSSchema. Retrive ICDSSProject interface pointer into mpCDSSProject. Set property values into the parameter of incoming VLDBProfile"
+		    parameters 	(list Parameters
+			(object Parameter "iBuffer"
+			    type       	"MBase::Buffer *")
+			(object Parameter "iSchema"
+			    type       	"DFCSchema &")
+			(object Parameter "ipICDSSSchema"
+			    type       	"ICDSSSchema *")
+			(object Parameter "iSmIndex"
+			    type       	"SchemaLoadIndex &")
+			(object Parameter "iProfile"
+			    type       	"VLDBProfile *"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878084338)
+		(object Operation "Populate"
+		    attributes 	(list Attribute_Set)
+		    quid       	"34567F5502DF"
+		    documentation 	"Call this function to populate all schema object. A dispatch function: call loading functions for different objects"
+		    parameters 	(list Parameters
+			(object Parameter "isEngineLite"
+			    type       	"bool"
+			    initv      	"false"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	878084339))
+	    language   	"C++")))`;
+    
+    handleFileLoad(complexSample, 'complex-sample.rose');
+  };
+
   const loadDocumentedSample = () => {
     const documentedSample = `(object Petal
   version 42
@@ -463,6 +588,9 @@ function App() {
             <p>Don't have a Rose file? Try the sample data:</p>
             <button onClick={loadSampleData} className="sample-button">
               Load Sample Rose File
+            </button>
+            <button onClick={loadComplexSample} className="sample-button complex">
+              Load Complex Sample (from your file)
             </button>
             <button onClick={loadDocumentedSample} className="sample-button documented">
               Load Documented Sample (with documentation fields)
